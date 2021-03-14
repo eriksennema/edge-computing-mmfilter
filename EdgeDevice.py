@@ -49,5 +49,5 @@ def process_video(video_dir):
     server.close()
 
 if __name__ == "__main__":
-    video_dir = './test_video_Trim.mp4'
+    video_dir = './test_video.mp4'
     process_video(video_dir)
