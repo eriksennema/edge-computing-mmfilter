@@ -1,14 +1,15 @@
-name := "akka-quickstart-scala"
+name := "mmfilter"
 
-version := "1.0"
+version := "0.1"
 
-scalaVersion := "2.13.1"
+// Scorch & Numsca dependency
+libraryDependencies += "be.botkop" %% "scorch" % "0.1.0"
+libraryDependencies += "be.botkop" %% "numsca" % "0.1.5"
 
-lazy val akkaVersion = "2.6.13"
+// dl4j
+libraryDependencies += "org.deeplearning4j" % "deeplearning4j-core" % "1.0.0-beta2"
+libraryDependencies += "org.nd4j" % "nd4j-native-platform" % "1.0.0-beta2"
 
-libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
-  "ch.qos.logback" % "logback-classic" % "1.2.3",
-  "com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion % Test,
-  "org.scalatest" %% "scalatest" % "3.1.0" % Test
-)
+fork := true
+
+scalaVersion := "2.12.1"
