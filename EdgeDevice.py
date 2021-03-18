@@ -27,7 +27,7 @@ def process_video(video_dir):
         while True:
             success, frame = capture.read() # Read one frame
             if success:
-                frame = cv2.resize(frame, (320, 240))
+                frame = cv2.resize(frame, (256, 256))
                 bytes_data = frame_to_bytes(frame)
                 length = len(bytes_data).to_bytes(2, 'big')
                 server.send(length)
