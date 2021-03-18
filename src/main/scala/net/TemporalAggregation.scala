@@ -1,6 +1,5 @@
 package net
 
-import scorch.autograd.Variable
 import org.nd4j.linalg.api.ndarray.INDArray
 import org.deeplearning4j.nn.conf.{BackpropType, MultiLayerConfiguration, NeuralNetConfiguration}
 import org.deeplearning4j.nn.conf.layers.{GlobalPoolingLayer, OutputLayer, PoolingType}
