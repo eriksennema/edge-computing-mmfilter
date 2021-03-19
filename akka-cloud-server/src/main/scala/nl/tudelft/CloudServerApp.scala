@@ -6,6 +6,8 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.Directives._
 
+import javax.imageio.ImageIO
+
 import scala.util.Failure
 import scala.util.Success
 
@@ -37,8 +39,13 @@ object CloudServerApp {
 
       import java.io.PrintStream
       import java.io.File
-      val o = new PrintStream(new File("SavedData.txt"))
+      import org.nd4j.linalg.factory.Nd4j
+      import org.datavec.image.loader.NativeImageLoader
 
+      val imageLoader = new NativeImageLoader(265, 265, 3)
+
+      val o = new PrintStream(new File("SavedData.txt"))
+      var imageCounter = 0
 //      val console = Symbol.out
 
       System.setOut(o)
@@ -46,7 +53,16 @@ object CloudServerApp {
       val routes = pathPrefix("request") {
         post{
             entity(as[String]) {
-              json => System.out.println(json)
+              json =>
+                val frames_array: Array[Double] = json.split(",").map(_.toDouble)
+                val frames = Nd4j.create(frames_array).reshape(Array(1, 256)) //INDArray
+                val buffer = imageLoader.asMatrixView(new File("/data/image"+imageCounter+".png"), frames) //BufferImage
+//                ImageIO.write(buffer,"png",)
+                imageCounter += 1
+//                InputStream in = new ByteArrayInputStream(byteArray);
+//                BufferedImage buf = ImageIO.read(in);
+
+                System.out.println("frame "+imageCounter+" "+json)
                 complete("{\"status\": 200, \"message\": \"You did a POST request and your data is stored\"}")
             }
         }
