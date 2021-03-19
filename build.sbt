@@ -27,11 +27,11 @@ docker / buildOptions := BuildOptions(cache = false)
 //}
 
 // dl4j
-libraryDependencies += "org.deeplearning4j" % "deeplearning4j-core" % "1.0.0-beta6"
-libraryDependencies += "org.nd4j" % "nd4j-native-platform" % "1.0.0-beta6"
+libraryDependencies += "org.deeplearning4j" % "deeplearning4j-core" % "1.0.0-beta7"
+libraryDependencies += "org.nd4j" % "nd4j-native-platform" % "1.0.0-beta7"
 
 // slf4j
-libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.1.3" % Runtime
+libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3" % Runtime
 
-//fork := true
+fork in run := true
 

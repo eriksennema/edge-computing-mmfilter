@@ -17,7 +17,7 @@ class TemporalAggregation {
   var averagePoolConf = new GlobalPoolingLayer()
   averagePoolConf.setCollapseDimensions(true)
   averagePoolConf.setPoolingType(PoolingType.AVG)
-  averagePoolConf.setPoolingDimensions(Array(0, 2, 3))
+  averagePoolConf.setPoolingDimensions(Array(0))
 
   var conf: NeuralNetConfiguration = new NeuralNetConfiguration.Builder()
     .seed(seed)
@@ -34,7 +34,6 @@ class TemporalAggregation {
   def run(input: INDArray): INDArray = {
     model.init()
     val output = model.output(input)
-    println(output.shapeInfoToString())
 
     output
   }
