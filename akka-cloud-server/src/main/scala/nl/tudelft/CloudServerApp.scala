@@ -35,12 +35,25 @@ object CloudServerApp {
 //      val handleRequestActor = context.spawn(HandleRequest(), "UserRegistryActor")
 //      context.watch(handleRequestActor)
 
+      import java.io.PrintStream
+      import java.io.File
+      val o = new PrintStream(new File("SavedData.txt"))
+
+//      val console = Symbol.out
+
+      System.setOut(o)
 //      val routes = new RequestRoutes(handleRequestActor)(context.system)
-      val routes: Route = pathPrefix("request") {
+      val routes = pathPrefix("request") {
         post{
-          complete("{\"status\": 200, \"message\": \"You did a GET request\"}")
+            entity(as[String]) {
+              json => System.out.println(json)
+                complete("{\"status\": 200, \"message\": \"You did a POST request and your data is stored\"}")
+            }
         }
-      }//(path("request") & GET) {complete("{\"status\": 200, \"message\": \"You did a GET request\"}")}
+      }
+
+
+      //(path("request") & GET) {complete("{\"status\": 200, \"message\": \"You did a GET request\"}")}
       startHttpServer(routes)(context.system)
 
       Behaviors.empty
