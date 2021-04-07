@@ -1,4 +1,3 @@
-//enablePlugins(JavaAppPackaging)
 
 name := "mmfilter"
 
@@ -20,11 +19,6 @@ docker / dockerfile := {
 }
 
 docker / buildOptions := BuildOptions(cache = false)
-
-//assemblyMergeStrategy in assembly := {
-//  case PathList("META-INF", xs @ _*) => MergeStrategy.discard
-//  case x => MergeStrategy.first
-//}
 
 // dl4j
 libraryDependencies += "org.deeplearning4j" % "deeplearning4j-core" % "1.0.0-beta7"

@@ -1,40 +1,21 @@
 package main
 
-import java.awt.image.BufferedImage
-import java.io.{BufferedReader, InputStreamReader, PrintStream, PrintWriter}
+import java.io.{BufferedReader, InputStreamReader, PrintWriter}
 import java.net.{ServerSocket, Socket}
 import java.nio.charset.StandardCharsets
-import java.util
 
 import collection.JavaConversions._
-import scala.io.BufferedSource
 import scala.util.control._
-import scala.io._
-import scala.util._
 import net.{GatedEmbeddingUnit, TemporalAggregation}
-import org.datavec.image.loader.{ImageLoader, Java2DNativeImageLoader}
 import org.nd4j.linalg.api.ndarray.INDArray
 import org.nd4j.linalg.factory.Nd4j
 
-import scala.collection.immutable.Stack
-
 object Main extends App {
-
-//  val s1 = Stack(5, 3, 2, 7, 6, 1)
-//
-//  // Print the stack
-//  println(s1)
-//
-//  // Applying top method
-//  val result = s1.top
-//
-//  // Display output
-//  print("Top element of the stack: " + result, s1)
 
   val dim1 = 256
   val window_size = 12
 
-  // socket server part
+  // socket server part settings
   val loop = new Breaks
   val inner_loop = new Breaks
   var msg = new String
@@ -73,7 +54,7 @@ object Main extends App {
             var frames = Nd4j.pile(array_collection)
             // println("res: ", frames.shapeInfoToString(), ", \n", query_feature.shapeInfoToString())
 
-            // pooling layer
+            // Temporal Aggregation Layer
             val averagePool = new TemporalAggregation
             val temporal_agg = averagePool.run(frames)
 
@@ -82,9 +63,11 @@ object Main extends App {
             val embedding1 = geu.run(temporal_agg)
             val embedding2 = geu.run(query_feature)
 
+            // Calculate cosine distance
             val cos_dis = embedding1.mmul(embedding2.reshape(-1)).div(embedding1.norm2().mul(embedding2.norm2()))
             println("cosine dis: ", cos_dis)
 
+            // Send back cosine distance
             out.println(cos_dis)
 
             in.close()

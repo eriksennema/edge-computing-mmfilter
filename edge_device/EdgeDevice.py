@@ -1,7 +1,6 @@
 '''Read video feeds, send data to the edge server by frames'''
 import cv2
 import socket
-import numpy as np
 import time
 
     
