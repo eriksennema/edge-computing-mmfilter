@@ -3,6 +3,9 @@ import torch.nn as nn
 
 
 class FeatureExtractor():
+    '''
+    The class uses the pretrained model to do the extraction
+    '''
     def __init__(self):
         mobilenet_v2 = torch.hub.load('pytorch/vision:v0.5.0', 'mobilenet_v2', pretrained=False)
         mobilenet_v2 = list(mobilenet_v2.children())[:-1]  # Remove the last FC(2048, 1000)

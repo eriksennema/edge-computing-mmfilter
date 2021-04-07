@@ -4,6 +4,9 @@ import torch
 
 
 class WordEncoder():
+    '''
+    This class uses the bert model as word encoder
+    '''
     def __init__(self):
         self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
         self.configuration = BertConfig()

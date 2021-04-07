@@ -7,6 +7,9 @@ import time
 
 
 class MultithreadServer():
+    '''
+    The Server class of the python part of the edge server. The socket listens for incoming data of the edge devices
+    '''
     def __init__(self, host, port):
         self.host = host
         self.port = port

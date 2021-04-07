@@ -18,6 +18,13 @@ def frame_to_bytes(frame):
 
 
 def send_to_cloud(frames, port, host="localhost"):
+    '''
+    sends frames to the cloud server
+
+    :param frames: data that is send to the server
+    :param port: the port on which the server is present
+    :param host: address of the cloud server
+    '''
     print("Making connection to cloud server...")
     if host == "localhost":
         for frame in frames:
@@ -76,6 +83,15 @@ def start_processing(q, scala_port, cloud_port, host="localhost", threshold=0.97
 
 
 def get_cosine_score(query_feature, video_feature, port, score_q, host="localhost"):
+    '''
+    connections to the scala part of the edge server and determines the cosine score
+
+    :param query_feature: the query feature vector
+    :param video_feature: the video feature vector
+    :param port: port of the scala edge server
+    :param score_q: stack of scores
+    :param host: address of the scala edge server
+    '''
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((host, port))
 
