@@ -11,6 +11,9 @@ import javax.imageio.ImageIO
 import scala.util.Failure
 import scala.util.Success
 
+/**
+ * The Cloud server application using akka http
+ */
 object CloudServerApp {
 
   private def startHttpServer(routes: Route)(implicit system: ActorSystem[_]): Unit = {
@@ -34,9 +37,6 @@ object CloudServerApp {
 
     val rootBehavior = Behaviors.setup[Nothing] { context =>
 
-//      val handleRequestActor = context.spawn(HandleRequest(), "UserRegistryActor")
-//      context.watch(handleRequestActor)
-
       import java.io.PrintStream
       import java.io.File
       import org.nd4j.linalg.factory.Nd4j
@@ -46,35 +46,30 @@ object CloudServerApp {
 
       val o = new PrintStream(new File("SavedData.txt"))
       var imageCounter = 0
-//      val console = Symbol.out
-
+      // sets the sys out to the file to save the data
       System.setOut(o)
-//      val routes = new RequestRoutes(handleRequestActor)(context.system)
+
       val routes = pathPrefix("request") {
         post{
             entity(as[String]) {
               json =>
+                // formats the data back to the right data
                 val frames_array: Array[Double] = json.split(",").map(_.toDouble)
                 val frames = Nd4j.create(frames_array).reshape(Array(1, 256)) //INDArray
                 val buffer = imageLoader.asMatrixView(new File("/data/image"+imageCounter+".png"), frames) //BufferImage
-//                ImageIO.write(buffer,"png",)
                 imageCounter += 1
-//                InputStream in = new ByteArrayInputStream(byteArray);
-//                BufferedImage buf = ImageIO.read(in);
 
                 System.out.println("frame "+imageCounter+" "+json)
-                complete("{\"status\": 200, \"message\": \"You did a POST request and your data is stored\"}")
+                complete("{\"status\": 200, \"message\": \"You did a POST request and your data was stored\"}") //message back to the edge server
             }
         }
       }
 
-
-      //(path("request") & GET) {complete("{\"status\": 200, \"message\": \"You did a GET request\"}")}
       startHttpServer(routes)(context.system)
 
       Behaviors.empty
     }
 
-    val system = ActorSystem[Nothing](rootBehavior, "AkkaHttpCloudServer") // ActorSystem[Nothing](rootBehavior, "AkkaHttpCloudServer")
+    val system = ActorSystem[Nothing](rootBehavior, "AkkaHttpCloudServer")
   }
 }

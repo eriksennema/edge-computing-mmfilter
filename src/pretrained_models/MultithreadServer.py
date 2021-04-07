@@ -48,4 +48,3 @@ class MultithreadServer():
             client.settimeout(20)
             threading.Thread(target=self.listen_to_client, args=(client, address, self.q)).start()
             print("Server is waiting...")
-            # time.sleep(sleep_time)

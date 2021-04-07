@@ -74,8 +74,6 @@ def start_processing(q, scala_port, cloud_port, host="localhost", threshold=0.97
                 flag = True
                 print("frames num list: ", frames_num_list)
 
-            # time.sleep(5)
-
 
 def get_cosine_score(query_feature, video_feature, port, score_q, host="localhost"):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:

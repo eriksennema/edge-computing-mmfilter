@@ -19,7 +19,6 @@ class FeatureExtractor():
 
         h1 = self.model(input_data)
         output_data = self.rslayer(torch.flatten(h1, start_dim=1))
-        # print(output_data.shape)
         return output_data.detach().numpy()
 
 

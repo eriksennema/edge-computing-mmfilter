@@ -15,8 +15,6 @@ def process_video(video_dir):
     capture = cv2.VideoCapture(video_dir)
     if capture.isOpened():
         total_frame = int(capture.get(cv2.CAP_PROP_FRAME_COUNT))
-        #server.send(total_frame.to_bytes(2, 'big')) # Send total number of frames
-        #time.sleep(1)
         count = 0
         while True:
             success, frame = capture.read() # Read one frame

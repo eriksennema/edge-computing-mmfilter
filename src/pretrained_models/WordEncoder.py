@@ -17,9 +17,7 @@ class WordEncoder():
         outputs = self.model(**inputs)
         last_hidden_states = outputs.last_hidden_state
         h2 = torch.mean(last_hidden_states, dim=1).squeeze()
-        # print(h2.shape, last_hidden_states.shape)
         query_embedding = self.featureExtractor(h2)
-        # print(query_embedding.shape)
         return query_embedding.detach().numpy()
 
 
